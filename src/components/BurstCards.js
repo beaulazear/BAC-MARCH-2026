@@ -651,26 +651,6 @@ const CardInner = memo(function CardInner({ card, CardIcon, bgTint, accentColor,
         </>
       ) : (
         <>
-          {/* Card image (mobile/stacked layout) - flush with card edges */}
-          {card.image && (
-            <div style={{
-              margin: "-" + padding.split(" ")[0] + " -" + padding.split(" ")[0] + " 16px -" + padding.split(" ")[0],
-              overflow: "hidden",
-            }}>
-              <img
-                src={card.image}
-                alt={card.title || "Card image"}
-                loading="lazy"
-                style={{
-                  width: "100%",
-                  height: "auto",
-                  display: "block",
-                  transform: card.imageSize === "small" ? "scale(1.1)" : "scale(1)",
-                }}
-              />
-            </div>
-          )}
-
           {/* Watermark icon */}
           {CardIcon && !card.image && (
             <CardIcon
@@ -857,7 +837,7 @@ const CardInner = memo(function CardInner({ card, CardIcon, bgTint, accentColor,
             </p>
           ) : null}
 
-          {/* Optional link */}
+          {/* Optional link - before image */}
           {card.link && (
             <div style={{ marginTop: "16px" }}>
               <a
@@ -885,6 +865,28 @@ const CardInner = memo(function CardInner({ card, CardIcon, bgTint, accentColor,
               >
                 {card.link.label} →
               </a>
+            </div>
+          )}
+
+          {/* Card image (mobile/stacked layout) - flush with all edges including bottom */}
+          {card.image && (
+            <div style={{
+              margin: "16px -" + padding.split(" ")[0] + " -" + padding.split(" ")[0] + " -" + padding.split(" ")[0],
+              overflow: "hidden",
+              borderTop: `4px solid ${isColorful ? card.color : accentColor}`,
+              paddingTop: "0",
+            }}>
+              <img
+                src={card.image}
+                alt={card.title || "Card image"}
+                loading="lazy"
+                style={{
+                  width: "100%",
+                  height: "auto",
+                  display: "block",
+                  transform: card.imageSize === "small" ? "scale(1.1)" : "scale(1)",
+                }}
+              />
             </div>
           )}
 

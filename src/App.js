@@ -90,7 +90,7 @@ const servicesCards = [
     tag: "$30",
     icon: TreePine,
     color: "#5C3E9E",
-    image: beauAndHornbillPhoto,
+    image: marmosetPhoto,
     imageSize: "small",
   },
   {
