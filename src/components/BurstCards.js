@@ -300,7 +300,7 @@ const CardInner = memo(function CardInner({ card, CardIcon, bgTint, accentColor,
   return (
     <div
       className="burst-card-inner"
-      onClick={card.isHomeButton ? onClose : undefined}
+      onClick={card.isHomeButton ? onClose : (card.link ? () => window.open(card.link.url, card.link.url.startsWith('tel:') || card.link.url.startsWith('mailto:') ? '_self' : '_blank') : undefined)}
       style={{
         borderRadius: card.shape === "pill" ? "32px" : "20px",
         padding: useSideBySide ? "0" : padding,
@@ -313,7 +313,7 @@ const CardInner = memo(function CardInner({ card, CardIcon, bgTint, accentColor,
         flexDirection: useSideBySide ? (imageOnRight ? "row-reverse" : "row") : "column",
         justifyContent: useSideBySide ? "flex-start" : "center",
         overflow: "hidden",
-        cursor: card.isHomeButton ? "pointer" : "default",
+        cursor: (card.isHomeButton || card.link) ? "pointer" : "default",
         transition: "transform 300ms ease, box-shadow 300ms ease",
       }}
       onMouseEnter={(e) => {
@@ -651,6 +651,27 @@ const CardInner = memo(function CardInner({ card, CardIcon, bgTint, accentColor,
         </>
       ) : (
         <>
+          {/* Card image for ABOUT cards (not service cards) - at the top */}
+          {card.image && card.imageSize !== "small" && (
+            <div style={{
+              margin: "-" + padding.split(" ")[0] + " -" + padding.split(" ")[0] + " 16px -" + padding.split(" ")[0],
+              overflow: "hidden",
+              borderBottom: `4px solid ${isColorful ? card.color : accentColor}`,
+            }}>
+              <img
+                src={card.image}
+                alt={card.title || "Card image"}
+                loading="lazy"
+                style={{
+                  width: "100%",
+                  height: "auto",
+                  display: "block",
+                  transform: card.imageSize === "small" ? "scale(1.1)" : "scale(1)",
+                }}
+              />
+            </div>
+          )}
+
           {/* Watermark icon */}
           {CardIcon && !card.image && (
             <CardIcon
@@ -868,8 +889,8 @@ const CardInner = memo(function CardInner({ card, CardIcon, bgTint, accentColor,
             </div>
           )}
 
-          {/* Card image (mobile/stacked layout) - flush with all edges including bottom */}
-          {card.image && (
+          {/* Card image for SERVICE cards only - at the bottom */}
+          {card.image && card.imageSize === "small" && (
             <div style={{
               margin: "16px -" + padding.split(" ")[0] + " -" + padding.split(" ")[0] + " -" + padding.split(" ")[0],
               overflow: "hidden",
