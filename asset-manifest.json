@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.d9d83baf.css",
-    "main.js": "/static/js/main.b1592b38.js",
+    "main.css": "/static/css/main.f5bc0180.css",
+    "main.js": "/static/js/main.c0c04426.js",
     "static/js/453.0c5ba6a9.chunk.js": "/static/js/453.0c5ba6a9.chunk.js",
     "static/media/BeauReykaMangoRu.jpeg": "/static/media/BeauReykaMangoRu.06dafeed414154afc57c.jpeg",
     "static/media/5Dogs.jpeg": "/static/media/5Dogs.8dc9f3d5c1ecfc3ac989.jpeg",
@@ -14,12 +14,12 @@
     "static/media/HEYA-Sans-Outline.otf": "/static/media/HEYA-Sans-Outline.87f7a346182e10cedc56.otf",
     "static/media/BeausAnimalCare.svg": "/static/media/BeausAnimalCare.069e443ca7a1f4f0658cb1e354bafd4a.svg",
     "index.html": "/index.html",
-    "main.d9d83baf.css.map": "/static/css/main.d9d83baf.css.map",
-    "main.b1592b38.js.map": "/static/js/main.b1592b38.js.map",
+    "main.f5bc0180.css.map": "/static/css/main.f5bc0180.css.map",
+    "main.c0c04426.js.map": "/static/js/main.c0c04426.js.map",
     "453.0c5ba6a9.chunk.js.map": "/static/js/453.0c5ba6a9.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.d9d83baf.css",
-    "static/js/main.b1592b38.js"
+    "static/css/main.f5bc0180.css",
+    "static/js/main.c0c04426.js"
   ]
 }
