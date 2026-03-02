@@ -272,8 +272,8 @@ const CardInner = memo(function CardInner({ card, CardIcon, bgTint, accentColor,
         setIsDesktop(false);
       }
 
-      // Split layout for cards with images: only on desktop (above 900px)
-      setUseSplitLayout(width > 900);
+      // Split layout for cards with images: only on desktop (above 1285px)
+      setUseSplitLayout(width > 1285);
     };
 
     updateSize();
@@ -284,6 +284,11 @@ const CardInner = memo(function CardInner({ card, CardIcon, bgTint, accentColor,
   const padding = card.shape === "pill"
     ? (isDesktop ? "24px 36px" : "20px 28px")
     : (isDesktop ? "32px" : "24px");
+
+  // Extract vertical and horizontal padding for image margins
+  const paddingParts = padding.split(" ");
+  const verticalPadding = paddingParts[0];
+  const horizontalPadding = paddingParts[1] || paddingParts[0];
 
   // Use bright color if provided, otherwise use bgTint
   const backgroundColor = card.color || bgTint;
@@ -336,7 +341,7 @@ const CardInner = memo(function CardInner({ card, CardIcon, bgTint, accentColor,
             flex: `0 0 ${imagePercent}`,
             position: "relative",
             overflow: "hidden",
-            maxHeight: card.imageSize === "small" ? "280px" : "400px",
+            maxHeight: card.imageSize === "small" ? "280px" : "550px",
           }}>
             <img
               src={card.image}
@@ -347,6 +352,7 @@ const CardInner = memo(function CardInner({ card, CardIcon, bgTint, accentColor,
                 height: "100%",
                 display: "block",
                 objectFit: "cover",
+                objectPosition: card.imageSize === "small" ? "center center" : "50% 70%",
                 transform: card.imageSize === "small" ? "scale(1.1)" : "scale(1)",
               }}
             />
@@ -566,12 +572,24 @@ const CardInner = memo(function CardInner({ card, CardIcon, bgTint, accentColor,
                 ))}
               </div>
             ) : card.content ? (
-              <p className="burst-card-content" style={{
-                color: isColorful ? `rgba(0,0,0,${contentOpacity})` : `rgba(58, 58, 58, 0.75)`,
-                textShadow: "none",
-              }}>
-                {card.content}
-              </p>
+              Array.isArray(card.content) ? (
+                card.content.map((paragraph, idx) => (
+                  <p key={idx} className="burst-card-content" style={{
+                    color: isColorful ? `rgba(0,0,0,${contentOpacity})` : `rgba(58, 58, 58, 0.75)`,
+                    textShadow: "none",
+                    marginBottom: idx < card.content.length - 1 ? "16px" : "0",
+                  }}>
+                    {paragraph}
+                  </p>
+                ))
+              ) : (
+                <p className="burst-card-content" style={{
+                  color: isColorful ? `rgba(0,0,0,${contentOpacity})` : `rgba(58, 58, 58, 0.75)`,
+                  textShadow: "none",
+                }}>
+                  {card.content}
+                </p>
+              )
             ) : null}
 
             {/* Optional link */}
@@ -654,7 +672,7 @@ const CardInner = memo(function CardInner({ card, CardIcon, bgTint, accentColor,
           {/* Card image for ABOUT cards (not service cards) - at the top */}
           {card.image && card.imageSize !== "small" && (
             <div style={{
-              margin: "-" + padding.split(" ")[0] + " -" + padding.split(" ")[0] + " 16px -" + padding.split(" ")[0],
+              margin: `-${verticalPadding} -${horizontalPadding} 16px -${horizontalPadding}`,
               overflow: "hidden",
               borderBottom: `4px solid ${isColorful ? card.color : accentColor}`,
             }}>
@@ -850,12 +868,24 @@ const CardInner = memo(function CardInner({ card, CardIcon, bgTint, accentColor,
               ))}
             </div>
           ) : card.content ? (
-            <p className="burst-card-content" style={{
-              color: isColorful ? `rgba(0,0,0,${contentOpacity})` : `rgba(58, 58, 58, 0.75)`,
-              textShadow: "none",
-            }}>
-              {card.content}
-            </p>
+            Array.isArray(card.content) ? (
+              card.content.map((paragraph, idx) => (
+                <p key={idx} className="burst-card-content" style={{
+                  color: isColorful ? `rgba(0,0,0,${contentOpacity})` : `rgba(58, 58, 58, 0.75)`,
+                  textShadow: "none",
+                  marginBottom: idx < card.content.length - 1 ? "16px" : "0",
+                }}>
+                  {paragraph}
+                </p>
+              ))
+            ) : (
+              <p className="burst-card-content" style={{
+                color: isColorful ? `rgba(0,0,0,${contentOpacity})` : `rgba(58, 58, 58, 0.75)`,
+                textShadow: "none",
+              }}>
+                {card.content}
+              </p>
+            )
           ) : null}
 
           {/* Optional link - before image */}
@@ -892,7 +922,7 @@ const CardInner = memo(function CardInner({ card, CardIcon, bgTint, accentColor,
           {/* Card image for SERVICE cards only - at the bottom */}
           {card.image && card.imageSize === "small" && (
             <div style={{
-              margin: "16px -" + padding.split(" ")[0] + " -" + padding.split(" ")[0] + " -" + padding.split(" ")[0],
+              margin: `16px -${horizontalPadding} -${verticalPadding} -${horizontalPadding}`,
               overflow: "hidden",
               borderTop: `4px solid ${isColorful ? card.color : accentColor}`,
               paddingTop: "0",

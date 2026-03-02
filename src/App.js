@@ -107,9 +107,11 @@ const aboutCards = [
   {
     id: "intro",
     title: "Hi, I'm Beau ❥",
-    content:
+    content: [
       "Lifelong animal lover, originally from Ohio. I moved to NYC in 2016 and built my career in professional animal care — from intern to full-time keeper at the Prospect Park Zoo, then vet assistant at the ASPCA and a local veterinarian's office. Those experiences and the amazing pet owners I met along the way inspired me to create Beau's Animal Care.",
-    shape: "wide-left",
+      "When I'm not caring for your furry friends, I work part-time as a software developer. Check out my personal website linked below to learn more about my background. ☺"
+    ],
+    shape: "pill",
     icon: Heart,
     color: "#D2494A",
     image: beauDogsPhoto,
@@ -119,51 +121,16 @@ const aboutCards = [
     },
   },
   {
-    id: "trust",
-    title: "50+ Regular Clients",
-    content:
-      "With over 10 years of professional animal care experience, your pet's safety, comfort, and happiness are my top priorities. I work with clients on a recurring basis for midday walks and pet sitting throughout Brooklyn, and also accept one-time appointments for pet sitting across NYC.",
-    shape: "narrow-right",
-    color: "#5C3E9E",
-  },
-  {
     id: "brooklyn",
     title: "Serving Brooklyn",
-    content:
-      "Carroll Gardens, Cobble Hill, & Gowanus for mid day walks. Prospect Heights, North Park Slope, & Crown Heights for adhoc appointments. All of NYC for pet sitting! Your pet isn't just a client — they're family. And family deserves someone with real experience, real care, and a genuine love for animals.",
-    shape: "wide-left",
-    color: "#D2494A",
+    content: [
+      "With over 10 years of professional animal care experience and 50+ regular clients, your pet's safety, comfort, and happiness are my top priorities. I work with clients on a recurring basis for midday walks in Carroll Gardens, Cobble Hill, & Gowanus. Prospect Heights, North Park Slope, & Crown Heights for adhoc appointments. All of NYC for pet sitting!",
+      "Your pet isn't just a client — they're family. And family deserves someone with real experience, real care, and a genuine love for animals."
+    ],
+    shape: "pill",
+    color: "#5C3E9E",
     image: beauAndRuPhoto,
     imagePosition: "right",
-  },
-  {
-    id: "contact",
-    title: "Contact Me ☎",
-    content:
-      "Ready to meet? Let's schedule a free meet-and-greet to see if we're a good fit for your pet's needs.",
-    shape: "narrow-right",
-    icon: MessageCircleHeart,
-    color: "#2E8543",
-    contacts: [
-      {
-        type: "phone",
-        icon: Phone,
-        label: "(718) 614-1878",
-        url: "tel:7186141878",
-      },
-      {
-        type: "email",
-        icon: Mail,
-        label: "beaulazear@gmail.com",
-        url: "mailto:beaulazear@gmail.com",
-      },
-      {
-        type: "instagram",
-        icon: Instagram,
-        label: "@beaus.animal.care",
-        url: "https://www.instagram.com/beaus.animal.care/",
-      },
-    ],
   },
   {
     id: "home",
