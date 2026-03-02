@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/static/css/main.d9d83baf.css",
+    "main.js": "/static/js/main.b1592b38.js",
+    "static/js/453.0c5ba6a9.chunk.js": "/static/js/453.0c5ba6a9.chunk.js",
+    "static/media/BeauReykaMangoRu.jpeg": "/static/media/BeauReykaMangoRu.06dafeed414154afc57c.jpeg",
+    "static/media/5Dogs.jpeg": "/static/media/5Dogs.8dc9f3d5c1ecfc3ac989.jpeg",
+    "static/media/BeauAndRu.JPG": "/static/media/BeauAndRu.002b2051b6900cd44ba7.JPG",
+    "static/media/BeauAndRuth.jpeg": "/static/media/BeauAndRuth.927c839e08451e73eaf7.jpeg",
+    "static/media/GraphicTwo.png": "/static/media/GraphicTwo.70921ec83170a9e693a9.png",
+    "static/media/Sage.jpeg": "/static/media/Sage.11f14b81ff0bca00b77d.jpeg",
+    "static/media/BeauAndHornbill.jpeg": "/static/media/BeauAndHornbill.c713d8dde304fb1ce39a.jpeg",
+    "static/media/Marmoset.jpeg": "/static/media/Marmoset.819c3b7edde21c0b57ff.jpeg",
+    "static/media/HEYA-Sans-Outline.otf": "/static/media/HEYA-Sans-Outline.87f7a346182e10cedc56.otf",
+    "static/media/BeausAnimalCare.svg": "/static/media/BeausAnimalCare.069e443ca7a1f4f0658cb1e354bafd4a.svg",
+    "index.html": "/index.html",
+    "main.d9d83baf.css.map": "/static/css/main.d9d83baf.css.map",
+    "main.b1592b38.js.map": "/static/js/main.b1592b38.js.map",
+    "453.0c5ba6a9.chunk.js.map": "/static/js/453.0c5ba6a9.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d9d83baf.css",
+    "static/js/main.b1592b38.js"
+  ]
+}
