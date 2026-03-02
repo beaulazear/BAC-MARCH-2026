@@ -23,7 +23,7 @@ html, body {
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
 }
@@ -54,7 +54,7 @@ img {
   align-items: center;
   justify-content: center;
   overflow: visible;
-  background: #FFFFFF;
+  background: radial-gradient(ellipse at center, #FFFFFF 0%, #FFFFFF 45%, #F8F8F8 100%);
   user-select: none;
   padding-top: 60px;
   padding-bottom: 40px;
@@ -79,6 +79,7 @@ img {
   height: 360px;
   width: 360px;
   object-fit: contain;
+  border-radius: 50%;
 }
 
 @media (min-width: 640px) {
@@ -117,11 +118,59 @@ img {
   background: none;
   border: none;
   padding: 0;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+  transition: filter 300ms ease, transform 300ms ease;
+}
+
+.sketch-link:hover {
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.25));
 }
 
 .sketch-link:focus-visible {
   outline: 2px solid currentColor;
   outline-offset: 2px;
+}
+
+/* Floating animation for sketch links on desktop */
+@media (min-width: 768px) {
+  .sketch-link-services {
+    animation: float-services 4s ease-in-out infinite;
+  }
+
+  .sketch-link-contact {
+    animation: float-contact 4.5s ease-in-out infinite;
+  }
+
+  .sketch-link-about {
+    animation: float-about 4.2s ease-in-out infinite;
+  }
+
+  .sketch-link-services:hover {
+    transform: rotate(-8deg) translateY(-12px) !important;
+  }
+
+  .sketch-link-contact:hover {
+    transform: translateX(-50%) rotate(0deg) translateY(-12px) !important;
+  }
+
+  .sketch-link-about:hover {
+    transform: rotate(6deg) translateY(-12px) !important;
+  }
+}
+
+@keyframes float-services {
+  0%, 100% { transform: rotate(-8deg) translateY(0px); }
+  50% { transform: rotate(-8deg) translateY(-8px); }
+}
+
+@keyframes float-contact {
+  0%, 100% { transform: translateX(-50%) rotate(0deg) translateY(0px); }
+  50% { transform: translateX(-50%) rotate(0deg) translateY(-8px); }
+}
+
+@keyframes float-about {
+  0%, 100% { transform: rotate(6deg) translateY(0px); }
+  50% { transform: rotate(6deg) translateY(-8px); }
 }
 
 .sketch-link-services {
@@ -434,8 +483,8 @@ img {
   /* Adjust canvas to column layout */
   .art-canvas {
     flex-direction: column;
-    padding-top: 32px;
-    padding-bottom: 20px;
+    padding-top: 0;
+    padding-bottom: 0;
     padding-left: 0;
     padding-right: 0;
   }
@@ -465,30 +514,39 @@ img {
   justify-content: center;
   gap: 10px;
   width: 100%;
-  padding: 16px 24px;
+  padding: 18px 32px;
   background: #FFFFFF;
-  border: 2px solid;
-  border-radius: 12px;
+  border: 3px solid;
+  border-radius: 50px;
   font-family: 'HEYA Sans Outline', Georgia, 'Times New Roman', serif;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 700;
   text-transform: lowercase;
   letter-spacing: 0.025em;
   cursor: pointer;
-  transition: transform 200ms ease, box-shadow 200ms ease;
+  transition: transform 300ms cubic-bezier(0.34, 1.5, 0.64, 1),
+              box-shadow 300ms ease,
+              background-color 300ms ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
 }
 
 .mobile-nav-button:active {
-  transform: scale(0.97);
+  transform: scale(0.96);
 }
 
 .mobile-nav-button:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
 }
 
 .mobile-nav-icon {
-  height: 20px;
-  width: 20px;
+  height: 22px;
+  width: 22px;
+  transition: transform 300ms cubic-bezier(0.34, 1.5, 0.64, 1);
+}
+
+.mobile-nav-button:hover .mobile-nav-icon {
+  transform: rotate(-8deg) scale(1.1);
 }
 
 /* ===== BURST CARDS ===== */
@@ -510,6 +568,12 @@ img {
   box-shadow: 0 0 40px #D2494A40, 0 12px 30px #D2494A25;
   height: auto;
   overflow: hidden;
+  perspective: 1000px;
+  transition: box-shadow 300ms ease;
+}
+
+.burst-modal-header:hover {
+  box-shadow: 0 0 50px #D2494A50, 0 12px 35px #D2494A30;
 }
 
 .burst-modal-logo {
@@ -837,7 +901,7 @@ img {
 
 .burst-card-tag-text {
   font-family: 'HEYA Sans Outline', Georgia, 'Times New Roman', serif;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -857,7 +921,7 @@ img {
 .burst-card-content {
   position: relative;
   z-index: 10;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
   font-size: 17px;
   font-weight: 500;
   line-height: 1.6;
@@ -867,7 +931,7 @@ img {
 /* Larger text on desktop (above 900px) */
 @media (min-width: 901px) {
   .burst-card-tag-text {
-    font-size: 14px;
+    font-size: 17px;
   }
 
   .burst-card-title {

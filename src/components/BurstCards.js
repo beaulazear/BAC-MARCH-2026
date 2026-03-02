@@ -5,6 +5,8 @@ export function BurstCards({ cards, open, onClose, origin, accentColor }) {
   const [visible, setVisible] = useState(false);
   const [scattered, setScattered] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [showGoBackText, setShowGoBackText] = useState(false);
+  const [headerHovered, setHeaderHovered] = useState(false);
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -13,6 +15,20 @@ export function BurstCards({ cards, open, onClose, origin, accentColor }) {
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
   }, []);
+
+  // Flip header between logo and "go back home" text every 3 seconds (only when not hovering)
+  useEffect(() => {
+    if (!open) return;
+    const interval = setInterval(() => {
+      if (!headerHovered) {
+        setShowGoBackText(prev => !prev);
+      }
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [open, headerHovered]);
+
+  // Show "go back home" when hovering
+  const shouldShowText = headerHovered || showGoBackText;
 
   useEffect(() => {
     if (open) {
@@ -65,15 +81,55 @@ export function BurstCards({ cards, open, onClose, origin, accentColor }) {
         aria-modal="true"
         aria-label="Content cards"
       >
-        {/* Header logo */}
+        {/* Header logo/text - clickable */}
         <div
           className="burst-modal-header"
+          onClick={onClose}
+          onMouseEnter={() => setHeaderHovered(true)}
+          onMouseLeave={() => setHeaderHovered(false)}
           style={{
             opacity: scattered ? 1 : 0,
-            transition: "opacity 400ms ease 200ms",
+            transition: "opacity 400ms ease 200ms, transform 300ms ease",
+            cursor: "pointer",
+            transform: headerHovered ? "translateY(-2px)" : "translateY(0)",
           }}
         >
-          <img src={logo} alt="Beau's Animal Care" className="burst-modal-logo" />
+          <div style={{
+            position: "relative",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}>
+            <img
+              src={logo}
+              alt="Beau's Animal Care"
+              className="burst-modal-logo"
+              style={{
+                transform: shouldShowText ? "rotateY(90deg)" : "rotateY(0deg)",
+                opacity: shouldShowText ? 0 : 1,
+                transition: "transform 600ms cubic-bezier(0.34, 1.56, 0.64, 1), opacity 300ms ease",
+              }}
+            />
+            <div
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: `translate(-50%, -50%) ${shouldShowText ? "rotateY(0deg)" : "rotateY(-90deg)"}`,
+                opacity: shouldShowText ? 1 : 0,
+                fontFamily: "'HEYA Sans Outline', Georgia, 'Times New Roman', serif",
+                fontSize: isMobile ? "28px" : "42px",
+                fontWeight: "900",
+                color: accentColor,
+                textTransform: "lowercase",
+                letterSpacing: "0.02em",
+                transition: "transform 600ms cubic-bezier(0.34, 1.56, 0.64, 1), opacity 300ms ease",
+                whiteSpace: "nowrap",
+              }}
+            >
+              ← go back home
+            </div>
+          </div>
         </div>
 
         <div className="burst-cards-mobile-content">
@@ -117,15 +173,55 @@ export function BurstCards({ cards, open, onClose, origin, accentColor }) {
       aria-modal="true"
       aria-label="Content cards"
     >
-      {/* Header logo */}
+      {/* Header logo/text - clickable */}
       <div
         className="burst-modal-header"
+        onClick={onClose}
+        onMouseEnter={() => setHeaderHovered(true)}
+        onMouseLeave={() => setHeaderHovered(false)}
         style={{
           opacity: scattered ? 1 : 0,
-          transition: "opacity 400ms ease 200ms",
+          transition: "opacity 400ms ease 200ms, transform 300ms ease",
+          cursor: "pointer",
+          transform: headerHovered ? "translateY(-2px)" : "translateY(0)",
         }}
       >
-        <img src={logo} alt="Beau's Animal Care" className="burst-modal-logo" />
+        <div style={{
+          position: "relative",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}>
+          <img
+            src={logo}
+            alt="Beau's Animal Care"
+            className="burst-modal-logo"
+            style={{
+              transform: shouldShowText ? "rotateY(90deg)" : "rotateY(0deg)",
+              opacity: shouldShowText ? 0 : 1,
+              transition: "transform 600ms cubic-bezier(0.34, 1.56, 0.64, 1), opacity 300ms ease",
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: `translate(-50%, -50%) ${shouldShowText ? "rotateY(0deg)" : "rotateY(-90deg)"}`,
+              opacity: shouldShowText ? 1 : 0,
+              fontFamily: "'HEYA Sans Outline', Georgia, 'Times New Roman', serif",
+              fontSize: isMobile ? "28px" : "42px",
+              fontWeight: "900",
+              color: accentColor,
+              textTransform: "lowercase",
+              letterSpacing: "0.02em",
+              transition: "transform 600ms cubic-bezier(0.34, 1.56, 0.64, 1), opacity 300ms ease",
+              whiteSpace: "nowrap",
+            }}
+          >
+            ← go back home
+          </div>
+        </div>
       </div>
 
 
@@ -213,27 +309,24 @@ const CardInner = memo(function CardInner({ card, CardIcon, bgTint, accentColor,
         boxShadow: isColorful
           ? `0 0 60px ${card.color}40, 0 20px 50px ${card.color}25, 0 4px 12px rgba(0,0,0,0.08)`
           : `0 8px 32px ${accentColor}08, 0 2px 8px rgba(0,0,0,0.03)`,
-        display: useSideBySide ? "flex" : "block",
-        flexDirection: useSideBySide && imageOnRight ? "row-reverse" : "row",
+        display: "flex",
+        flexDirection: useSideBySide ? (imageOnRight ? "row-reverse" : "row") : "column",
+        justifyContent: useSideBySide ? "flex-start" : "center",
         overflow: "hidden",
         cursor: card.isHomeButton ? "pointer" : "default",
-        transition: card.isHomeButton ? "transform 200ms ease, box-shadow 200ms ease" : "none",
+        transition: "transform 300ms ease, box-shadow 300ms ease",
       }}
       onMouseEnter={(e) => {
-        if (card.isHomeButton) {
-          e.currentTarget.style.transform = "translateY(-4px)";
-          e.currentTarget.style.boxShadow = isColorful
-            ? `0 0 80px ${card.color}50, 0 24px 60px ${card.color}30, 0 6px 16px rgba(0,0,0,0.12)`
-            : `0 12px 40px ${accentColor}12, 0 4px 12px rgba(0,0,0,0.06)`;
-        }
+        e.currentTarget.style.transform = "translateY(-4px)";
+        e.currentTarget.style.boxShadow = isColorful
+          ? `0 0 80px ${card.color}50, 0 24px 60px ${card.color}30, 0 6px 16px rgba(0,0,0,0.12)`
+          : `0 12px 40px ${accentColor}12, 0 4px 12px rgba(0,0,0,0.06)`;
       }}
       onMouseLeave={(e) => {
-        if (card.isHomeButton) {
-          e.currentTarget.style.transform = "translateY(0)";
-          e.currentTarget.style.boxShadow = isColorful
-            ? `0 0 60px ${card.color}40, 0 20px 50px ${card.color}25, 0 4px 12px rgba(0,0,0,0.08)`
-            : `0 8px 32px ${accentColor}08, 0 2px 8px rgba(0,0,0,0.03)`;
-        }
+        e.currentTarget.style.transform = "translateY(0)";
+        e.currentTarget.style.boxShadow = isColorful
+          ? `0 0 60px ${card.color}40, 0 20px 50px ${card.color}25, 0 4px 12px rgba(0,0,0,0.08)`
+          : `0 8px 32px ${accentColor}08, 0 2px 8px rgba(0,0,0,0.03)`;
       }}
     >
       {useSideBySide ? (
@@ -242,6 +335,8 @@ const CardInner = memo(function CardInner({ card, CardIcon, bgTint, accentColor,
           <div style={{
             flex: `0 0 ${imagePercent}`,
             position: "relative",
+            overflow: "hidden",
+            maxHeight: card.imageSize === "small" ? "280px" : "400px",
           }}>
             <img
               src={card.image}
@@ -252,6 +347,7 @@ const CardInner = memo(function CardInner({ card, CardIcon, bgTint, accentColor,
                 height: "100%",
                 display: "block",
                 objectFit: "cover",
+                transform: card.imageSize === "small" ? "scale(1.1)" : "scale(1)",
               }}
             />
           </div>
@@ -263,6 +359,7 @@ const CardInner = memo(function CardInner({ card, CardIcon, bgTint, accentColor,
             position: "relative",
             display: "flex",
             flexDirection: "column",
+            justifyContent: "center",
           }}>
             {/* Watermark icon */}
             {CardIcon && !card.tag && (
@@ -297,7 +394,7 @@ const CardInner = memo(function CardInner({ card, CardIcon, bgTint, accentColor,
                     <span className="burst-card-tag" style={{ margin: "0", flexShrink: 0 }}>
                       {CardIcon && (
                         <CardIcon
-                          size={15}
+                          size={18}
                           strokeWidth={2}
                           style={{ color: isColorful ? card.color : accentColor }}
                         />
@@ -365,7 +462,7 @@ const CardInner = memo(function CardInner({ card, CardIcon, bgTint, accentColor,
                       <span className="burst-card-tag">
                         {CardIcon && (
                           <CardIcon
-                            size={15}
+                            size={18}
                             strokeWidth={2}
                             style={{ color: isColorful ? card.color : accentColor }}
                           />
@@ -382,26 +479,100 @@ const CardInner = memo(function CardInner({ card, CardIcon, bgTint, accentColor,
                       </span>
                     )}
                     {card.title && (
-                      <h3 className="burst-card-title" style={{
-                        color: textColor,
-                        textShadow: "none",
-                        fontWeight: "900",
-                      }}>
-                        {card.title}
-                      </h3>
+                      card.columnLayout ? (
+                        // Service locations with icon
+                        <div style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "10px",
+                          marginBottom: "8px",
+                        }}>
+                          {CardIcon && (
+                            <CardIcon
+                              size={26}
+                              strokeWidth={2}
+                              style={{ color: isColorful ? card.color : accentColor, flexShrink: 0 }}
+                            />
+                          )}
+                          <h3 className="burst-card-title" style={{
+                            color: textColor,
+                            textShadow: "none",
+                            fontWeight: "900",
+                            margin: "0",
+                          }}>
+                            {card.title}
+                          </h3>
+                        </div>
+                      ) : (
+                        <h3 className="burst-card-title" style={{
+                          color: textColor,
+                          textShadow: "none",
+                          fontWeight: "900",
+                        }}>
+                          {card.title}
+                        </h3>
+                      )
                     )}
                   </>
                 )}
               </>
             )}
-            {card.content && (
+
+            {/* Column layout for service locations on desktop */}
+            {card.columnLayout && card.columns && useSplitLayout ? (
+              <div style={{
+                display: "flex",
+                gap: "32px",
+                marginTop: "12px",
+              }}>
+                {card.columns.map((col, idx) => (
+                  <div key={idx} style={{ flex: "1", minWidth: "0" }}>
+                    <div style={{
+                      fontFamily: "'HEYA Sans Outline', Georgia, 'Times New Roman', serif",
+                      fontWeight: "900",
+                      fontSize: "16px",
+                      color: isColorful ? card.color : accentColor,
+                      marginBottom: "6px",
+                    }}>
+                      {col.label}
+                    </div>
+                    <div className="burst-card-content" style={{
+                      color: isColorful ? `rgba(0,0,0,${contentOpacity})` : `rgba(58, 58, 58, 0.75)`,
+                      fontSize: "17px",
+                      lineHeight: "1.5",
+                    }}>
+                      {col.value}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : card.columnLayout && card.columns ? (
+              // Mobile: stacked layout with labels
+              <div style={{ marginTop: "8px" }}>
+                {card.columns.map((col, idx) => (
+                  <p key={idx} className="burst-card-content" style={{
+                    color: isColorful ? `rgba(0,0,0,${contentOpacity})` : `rgba(58, 58, 58, 0.75)`,
+                    textShadow: "none",
+                    marginBottom: idx < card.columns.length - 1 ? "12px" : "0",
+                  }}>
+                    <span style={{
+                      fontFamily: "'HEYA Sans Outline', Georgia, 'Times New Roman', serif",
+                      fontWeight: "900"
+                    }}>
+                      {col.label}
+                    </span>{" "}
+                    {col.value}
+                  </p>
+                ))}
+              </div>
+            ) : card.content ? (
               <p className="burst-card-content" style={{
                 color: isColorful ? `rgba(0,0,0,${contentOpacity})` : `rgba(58, 58, 58, 0.75)`,
                 textShadow: "none",
               }}>
                 {card.content}
               </p>
-            )}
+            ) : null}
 
             {/* Optional link */}
             {card.link && (
@@ -454,7 +625,7 @@ const CardInner = memo(function CardInner({ card, CardIcon, bgTint, accentColor,
                         borderRadius: "12px",
                         textDecoration: "none",
                         color: isColorful ? "#FFFFFF" : accentColor,
-                        fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif",
+                        fontFamily: "'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif",
                         fontSize: "15px",
                         fontWeight: "600",
                         textShadow: isColorful ? "0 1px 3px rgba(0,0,0,0.2)" : "none",
@@ -494,6 +665,7 @@ const CardInner = memo(function CardInner({ card, CardIcon, bgTint, accentColor,
                   width: "100%",
                   height: "auto",
                   display: "block",
+                  transform: card.imageSize === "small" ? "scale(1.1)" : "scale(1)",
                 }}
               />
             </div>
@@ -617,26 +789,73 @@ const CardInner = memo(function CardInner({ card, CardIcon, bgTint, accentColor,
                     </span>
                   )}
                   {card.title && (
-                    <h3 className="burst-card-title" style={{
-                      color: textColor,
-                      textShadow: "none",
-                      fontWeight: "900",
-                    }}>
-                      {card.title}
-                    </h3>
+                    card.columnLayout ? (
+                      // Service locations with icon
+                      <div style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "10px",
+                        marginBottom: "8px",
+                      }}>
+                        {CardIcon && (
+                          <CardIcon
+                            size={isDesktop ? 26 : 22}
+                            strokeWidth={2}
+                            style={{ color: isColorful ? card.color : accentColor, flexShrink: 0 }}
+                          />
+                        )}
+                        <h3 className="burst-card-title" style={{
+                          color: textColor,
+                          textShadow: "none",
+                          fontWeight: "900",
+                          margin: "0",
+                        }}>
+                          {card.title}
+                        </h3>
+                      </div>
+                    ) : (
+                      <h3 className="burst-card-title" style={{
+                        color: textColor,
+                        textShadow: "none",
+                        fontWeight: "900",
+                      }}>
+                        {card.title}
+                      </h3>
+                    )
                   )}
                 </>
               )}
             </>
           )}
-          {card.content && (
+
+          {/* Column layout for service locations */}
+          {card.columnLayout && card.columns ? (
+            // Mobile: stacked layout with labels
+            <div style={{ marginTop: "8px" }}>
+              {card.columns.map((col, idx) => (
+                <p key={idx} className="burst-card-content" style={{
+                  color: isColorful ? `rgba(0,0,0,${contentOpacity})` : `rgba(58, 58, 58, 0.75)`,
+                  textShadow: "none",
+                  marginBottom: idx < card.columns.length - 1 ? "12px" : "0",
+                }}>
+                  <span style={{
+                    fontFamily: "'HEYA Sans Outline', Georgia, 'Times New Roman', serif",
+                    fontWeight: "900"
+                  }}>
+                    {col.label}
+                  </span>{" "}
+                  {col.value}
+                </p>
+              ))}
+            </div>
+          ) : card.content ? (
             <p className="burst-card-content" style={{
               color: isColorful ? `rgba(0,0,0,${contentOpacity})` : `rgba(58, 58, 58, 0.75)`,
               textShadow: "none",
             }}>
               {card.content}
             </p>
-          )}
+          ) : null}
 
           {/* Optional link */}
           {card.link && (

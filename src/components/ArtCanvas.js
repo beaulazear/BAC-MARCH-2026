@@ -127,7 +127,7 @@ export const ArtCanvas = memo(function ArtCanvas({ onOpenServices, onOpenAbout, 
           transition: "opacity 1s ease 1000ms",
         }}
       >
-        Brooklyn, NY
+        Brooklyn, NYC
       </span>
     </main>
   );

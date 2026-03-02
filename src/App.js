@@ -24,18 +24,23 @@ import sagePhoto from "./images/Sage.jpeg";
 
 const servicesCards = [
   {
-    id: "home",
-    title: "Go Back Home",
-    content: "",
-    shape: "small-center",
-    color: "#7A8E6E",
-    isHomeButton: true,
-  },
-  {
     id: "service-areas",
     title: "Service Locations",
-    content:
-      "Midday walks: Carroll Gardens, Cobble Hill, Gowanus. Off-hours walks: Prospect Heights, North Park Slope. Pet sitting: Available throughout NYC depending on schedule.",
+    columnLayout: true,
+    columns: [
+      {
+        label: "Midday walks:",
+        value: "Carroll Gardens, Cobble Hill, Gowanus"
+      },
+      {
+        label: "Off-hours walks:",
+        value: "Prospect Heights, North Park Slope"
+      },
+      {
+        label: "Pet sitting:",
+        value: "Available throughout NYC depending on schedule"
+      }
+    ],
     shape: "pill",
     icon: MapPin,
     color: "#2E8543",
@@ -88,9 +93,6 @@ const servicesCards = [
     image: beauAndHornbillPhoto,
     imageSize: "small",
   },
-];
-
-const aboutCards = [
   {
     id: "home",
     title: "Go Back Home",
@@ -99,11 +101,14 @@ const aboutCards = [
     color: "#7A8E6E",
     isHomeButton: true,
   },
+];
+
+const aboutCards = [
   {
     id: "intro",
-    title: "Hi, I'm Beau",
+    title: "Hi, I'm Beau ❥",
     content:
-      "I've been an animal lover my whole life! I grew up with dogs, birds, and lizards. I moved to NYC in 2016 from Ohio, where I started my professional animal career as an intern at the Prospect Park Zoo, eventually working my way up to full-time keeper. From there, I worked at the ASPCA and a local veterinarian's office as a vet assistant. Along the way, I met countless animal lovers and pet owners — which eventually led me to creating Beau's Animal Care.",
+      "Lifelong animal lover, originally from Ohio. I moved to NYC in 2016 and built my career in professional animal care — from intern to full-time keeper at the Prospect Park Zoo, then vet assistant at the ASPCA and a local veterinarian's office. Those experiences and the amazing pet owners I met along the way inspired me to create Beau's Animal Care.",
     shape: "wide-left",
     icon: Heart,
     color: "#D2494A",
@@ -117,10 +122,9 @@ const aboutCards = [
     id: "trust",
     title: "50+ Regular Clients",
     content:
-      "With over 10 years of professional animal care experience, your pet's safety, comfort, and happiness are my top priorities.",
+      "With over 10 years of professional animal care experience, your pet's safety, comfort, and happiness are my top priorities. I work with clients on a recurring basis for midday walks and pet sitting throughout Brooklyn, and also accept one-time appointments for pet sitting across NYC.",
     shape: "narrow-right",
     color: "#5C3E9E",
-    image: marmosetPhoto,
   },
   {
     id: "brooklyn",
@@ -128,15 +132,13 @@ const aboutCards = [
     content:
       "Carroll Gardens, Cobble Hill, & Gowanus for mid day walks. Prospect Heights, North Park Slope, & Crown Heights for adhoc appointments. All of NYC for pet sitting! Your pet isn't just a client — they're family. And family deserves someone with real experience, real care, and a genuine love for animals.",
     shape: "wide-left",
-    icon: MapPin,
-    showIconRight: true,
     color: "#D2494A",
     image: beauAndRuPhoto,
     imagePosition: "right",
   },
   {
     id: "contact",
-    title: "Contact Me",
+    title: "Contact Me ☎",
     content:
       "Ready to meet? Let's schedule a free meet-and-greet to see if we're a good fit for your pet's needs.",
     shape: "narrow-right",
@@ -163,9 +165,6 @@ const aboutCards = [
       },
     ],
   },
-];
-
-const contactCards = [
   {
     id: "home",
     title: "Go Back Home",
@@ -174,9 +173,12 @@ const contactCards = [
     color: "#7A8E6E",
     isHomeButton: true,
   },
+];
+
+const contactCards = [
   {
     id: "instagram",
-    title: "Follow me on IG",
+    title: "Follow me on IG ᵔᴗᵔ",
     content: "@beaus.animal.care",
     shape: "third",
     icon: Instagram,
@@ -188,7 +190,7 @@ const contactCards = [
   },
   {
     id: "phone",
-    title: "Give me a call",
+    title: "Give me a call ☎",
     content: "(718) 614-1878",
     shape: "third",
     icon: Phone,
@@ -200,7 +202,7 @@ const contactCards = [
   },
   {
     id: "email",
-    title: "Or send an email!",
+    title: "Or send an email! ✉",
     content: "beaulazear@gmail.com",
     shape: "third",
     icon: Mail,
@@ -209,6 +211,14 @@ const contactCards = [
       url: "mailto:beaulazear@gmail.com",
       label: "Send Email",
     },
+  },
+  {
+    id: "home",
+    title: "Go Back Home",
+    content: "",
+    shape: "small-center",
+    color: "#7A8E6E",
+    isHomeButton: true,
   },
 ];
 
